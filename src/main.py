@@ -42,6 +42,8 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 def hello_world():
     form = AddressQuery()
     if form.validate_on_submit():
+        print('Submitted request for address {}'.format(
+            form.address.data))
         flash('Submitted request for address {}'.format(
             form.address.data))
         return redirect('/')
