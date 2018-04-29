@@ -38,10 +38,13 @@ app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def hello_world():
     form = AddressQuery()
-    # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
+    if form.validate_on_submit():
+        flash('Submitted request for address {}'.format(
+            form.address.data))
+        return redirect('/')
     return render_template('address_query.html', form=form)
 
 
