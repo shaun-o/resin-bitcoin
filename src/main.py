@@ -43,6 +43,7 @@ def hello_world():
     print ('In the base route')
     print ('Request method is %s ' % request.method)
     form = AddressQuery(request.form)
+    flash(form.errors)
     if form.validate_on_submit():
         print ('In the post branch')
         return 'Submitted request for address {}'.format(
