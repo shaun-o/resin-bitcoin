@@ -6,6 +6,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask import render_template
 
+
 class AddressQuery(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])
     submit = SubmitField('Query')
@@ -36,9 +37,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    #form = AddressQuery()
-    #return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
-    return render_template('simple.html')
+    form = AddressQuery()
+    # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
+    return render_template('address_query.html', form=form)
 
 
 if __name__ == '__main__':
