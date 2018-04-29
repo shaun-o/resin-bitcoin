@@ -2,7 +2,7 @@ import sys
 from flask import Flask
 import blockchain.blockexplorer
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask import render_template
 
