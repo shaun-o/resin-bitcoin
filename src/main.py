@@ -1,4 +1,5 @@
 import sys
+import os
 from flask import Flask
 import blockchain.blockexplorer
 from flask_wtf import FlaskForm
@@ -35,7 +36,7 @@ def read_blockchain_address(read_address):
 
 app = Flask(__name__)
 app.debug = True
-
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 @app.route('/')
 def hello_world():
