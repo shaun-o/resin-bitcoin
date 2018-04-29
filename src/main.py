@@ -5,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 from flask import render_template
+import traceback
 
 
 class AddressQuery(FlaskForm):
@@ -42,7 +43,7 @@ def hello_world():
         # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
         return render_template('address_query.html', form=form)
     except:
-        print ("Unexpected error:", sys.exc_info()[0])
+        traceback.print_exc()
 
 
 if __name__ == '__main__':
