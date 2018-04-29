@@ -1,6 +1,6 @@
 import sys
 import os
-from flask import Flask
+from flask import Flask, request
 import blockchain.blockexplorer
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
