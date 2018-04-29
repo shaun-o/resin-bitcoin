@@ -43,7 +43,7 @@ def hello_world():
 
 @app.route('/form')
 def form_render():
-    return render_template('/usr/src/app/templates/simple.html')
+    return render_template('simple.html')
 
 
 
