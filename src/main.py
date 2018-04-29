@@ -34,16 +34,14 @@ def read_blockchain_address(read_address):
 
 
 app = Flask(__name__)
+app.debug = True
 
 
 @app.route('/')
 def hello_world():
-    try:
-        form = AddressQuery()
-        # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
-        return render_template('address_query.html', form=form)
-    except:
-        traceback.print_exc()
+    form = AddressQuery()
+    # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
+    return render_template('address_query.html', form=form)
 
 
 if __name__ == '__main__':
