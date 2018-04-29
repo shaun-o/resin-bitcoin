@@ -38,13 +38,7 @@ app = Flask(__name__)
 def hello_world():
     #form = AddressQuery()
     #return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
-    #return render_template('/usr/src/app/templates/simple.html')
-    return 'Back again'
-
-@app.route('/form')
-def form_render():
     return render_template('simple.html')
-
 
 
 if __name__ == '__main__':
