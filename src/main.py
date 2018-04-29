@@ -1,6 +1,14 @@
 import sys
 from flask import Flask
 import blockchain.blockexplorer
+from flask_wtf import FlaskForm
+from wtforms import StringField
+from wtforms.validators import DataRequired
+from flask import render_template
+
+class AddressQuery(FlaskForm):
+    address = StringField('Address', validators=[DataRequired()])
+    submit = SubmitField('Query')
 
 
 class TransactionDetails():
@@ -28,7 +36,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Shaun This is a Raspi 3 Python Hello World!' + sys.version
+    form = AddressQuery()
+    return render_template('templtes/address_query.html', title='BitCoin Address', form=form)
 
 
 if __name__ == '__main__':

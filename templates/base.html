@@ -1,0 +1,12 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Microblog</title>
+      {% else %}
+      <title>Welcome to BitCoint test</title>
+      {% endif %}
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>

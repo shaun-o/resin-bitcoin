@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>BitCoin Address Submission</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.address.label }}<br>
+            {{ form.address(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
