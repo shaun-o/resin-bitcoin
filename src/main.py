@@ -43,7 +43,7 @@ def hello_world():
     print ('Request method is %s ' % request.method)
     form = AddressQuery(request.form)
     flash(form.errors)
-    if form.validate_on_submit():
+    if request.form == 'POST':
         print ('In the post branch')
         return 'Submitted request for address {}'.format(
             form.address.data)
