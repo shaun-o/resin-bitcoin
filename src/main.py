@@ -40,10 +40,13 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
+    print ('In the base route')
     form = AddressQuery()
     if form.validate_on_submit():
+        print ('In the post branch')
         return 'Submitted request for address {}'.format(
             form.address.data)
+    print ('In the get branch')
     return render_template('address_query.html', form=form)
 
 
