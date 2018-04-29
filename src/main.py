@@ -1,11 +1,10 @@
 import sys
 import os
-from flask import Flask, request
+from flask import Flask, request, render_template, flash
 import blockchain.blockexplorer
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-from flask import render_template
 import traceback
 
 
