@@ -37,9 +37,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    form = AddressQuery()
-    # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
-    return render_template('address_query.html', form=form)
+    try:
+        form = AddressQuery()
+        # return render_template('/usr/src/app/templates/address_query.html', title='BitCoin Address', form=form)
+        return render_template('address_query.html', form=form)
+    except:
+        print ("Unexpected error:", sys.exc_info()[0])
 
 
 if __name__ == '__main__':
