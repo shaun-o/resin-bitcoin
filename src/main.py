@@ -37,7 +37,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     form = AddressQuery()
-    return render_template('templtes/address_query.html', title='BitCoin Address', form=form)
+    return render_template('templates/address_query.html', title='BitCoin Address', form=form)
 
 
 if __name__ == '__main__':
