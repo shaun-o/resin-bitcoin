@@ -37,6 +37,7 @@ app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
+
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
     print ('In the base route')
