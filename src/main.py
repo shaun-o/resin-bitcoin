@@ -3,12 +3,17 @@ import os
 from flask import Flask, request, render_template, flash
 import blockchain.blockexplorer
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, Label
 from wtforms.validators import DataRequired
 import transaction_table
+import redis
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+r.set('count', '0')
 
 class AddressQuery(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])
+    visitor_count = Label('test', 'Caption')
     submit = SubmitField('Query')
 
 
@@ -48,6 +53,8 @@ def hello_world():
         tx_list = read_blockchain_address(form.address.data)
         return transaction_table.return_table(tx_list).__html__()
     print ('In the get branch')
+    r.incr('count')
+    form.visitor_count.text = str(r.get('count'), 'utf-8')
     return render_template('address_query.html', form=form)
 
 
