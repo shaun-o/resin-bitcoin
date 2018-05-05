@@ -5,8 +5,7 @@ import blockchain.blockexplorer
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
-import traceback
-
+import transaction_table
 
 class AddressQuery(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])
@@ -46,8 +45,8 @@ def hello_world():
     flash(form.errors)
     if request.method == 'POST':
         print ('In the post branch')
-        return 'Submitted request for address {}'.format(
-            form.address.data)
+        tx_list = read_blockchain_address(form.address.data)
+        return transaction_table.return_table(tx_list).__html__()
     print ('In the get branch')
     return render_template('address_query.html', form=form)
 
