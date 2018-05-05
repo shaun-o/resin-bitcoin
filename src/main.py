@@ -8,7 +8,7 @@ from wtforms.validators import DataRequired
 import transaction_table
 import redis
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0)
+r = redis.StrictRedis(host=os.environ['redis'], port=6379, db=0)
 r.set('count', '0')
 
 class AddressQuery(FlaskForm):
