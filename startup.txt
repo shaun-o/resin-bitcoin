@@ -1,0 +1,4 @@
+Start three terminals
+On first terminal, run redis using redis-server.
+On second terminal, run celery worker using celery worker -A celery_blog -l info -c 5. By seeing the output, you will be able to tell that celery is running.
+On third terminal, run your script, python celery_blog.py.

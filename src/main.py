@@ -11,6 +11,10 @@ import redis
 r = redis.StrictRedis(host=os.environ['redis'], port=6379, db=0)
 r.set('count', '0')
 
+from flask_app import app
+from celery_app import celery
+from tasks import add_together
+
 class AddressQuery(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])
     visitor_count = Label('test', 'Caption')
@@ -37,11 +41,6 @@ def read_blockchain_address(read_address):
     return input_details
 
 
-app = Flask(__name__)
-app.debug = True
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-
-
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
     print ('In the base route')
@@ -56,8 +55,15 @@ def hello_world():
     r.incr('count')
     form.visitor_count.text = str(r.get('count'), 'utf-8')
     return render_template('address_query.html', form=form)
+    
+@app.route('/celery', methods=['GET'])
+def run_celery_task():
+    result = add_together.delay(23, 42)
+    return str(result.wait())
 
 
 if __name__ == '__main__':
+    print('In main')
     port = os.environ['PORT']
+
     app.run(host='0.0.0.0', port=int(port))
