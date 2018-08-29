@@ -4,10 +4,26 @@ services:
     container_name: bitcoin-resin
     privileged: true
     build: .
+    command: python src/main.py
     ports:
       - "80:80"
     depends_on:
       - redis
+    environment:
+      - redis=redis
+      - PORT=80
+      - SECRET_KEY=itsasecret
+  celery:
+    build: .
+    working_dir: /usr/src/app/src
+    command: celery worker -A main.celery -l debug
+    depends_on:
+      - redis
+    environment:
+      - redis=redis
   redis:
+    hostname: redis
     container_name: redis_store
-    image: armhf/redis
+    expose: 
+      - "6379"
+    image: redis:alpine
