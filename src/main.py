@@ -1,6 +1,6 @@
 import sys
 import os
-from flask import Flask, request, render_template, flash
+from flask import Flask, request, render_template, flash, url_for, jsonify
 import blockchain.blockexplorer
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, Label
@@ -13,7 +13,7 @@ r.set('count', '0')
 
 from flask_app import app
 from celery_app import celery
-from tasks import add_together
+from tasks import add_together, long_task
 
 class AddressQuery(FlaskForm):
     address = StringField('Address', validators=[DataRequired()])
@@ -61,6 +61,44 @@ def run_celery_task():
     result = add_together.delay(23, 42)
     return str(result.wait())
 
+@app.route('/longtask', methods=['POST'])
+def longtask():
+    task = long_task.apply_async()
+    return jsonify({}), 202, {'Location': url_for('taskstatus', task_id=task.id)}
+
+@app.route('/index')
+def index():
+    return render_template("index.html")
+
+@app.route('/status/<task_id>')
+def taskstatus(task_id):
+    task = long_task.AsyncResult(task_id)
+    if task.state == 'PENDING':
+        # job did not start yet
+        response = {
+            'state': task.state,
+            'current': 0,
+            'total': 1,
+            'status': 'Pending...'
+        }
+    elif task.state != 'FAILURE':
+        response = {
+            'state': task.state,
+            'current': task.info.get('current', 0),
+            'total': task.info.get('total', 1),
+            'status': task.info.get('status', '')
+        }
+        if 'result' in task.info:
+            response['result'] = task.info['result']
+    else:
+        # something went wrong in the background job
+        response = {
+            'state': task.state,
+            'current': 1,
+            'total': 1,
+            'status': str(task.info),  # this is the exception raised
+        }
+    return jsonify(response)
 
 if __name__ == '__main__':
     print('In main')
